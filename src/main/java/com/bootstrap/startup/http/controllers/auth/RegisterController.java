@@ -3,6 +3,7 @@ package com.bootstrap.startup.http.controllers.auth;
 import com.bootstrap.startup.http.requests.UserSignupRequest;
 import com.bootstrap.startup.models.User;
 import com.bootstrap.startup.repository.UserRepository;
+import com.bootstrap.startup.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,11 +16,10 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class RegisterController {
 
-    private final UserRepository userRepository;
+    private AuthService authService;
 
-    @Autowired
-    public RegisterController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public RegisterController(AuthService authService) {
+        this.authService = authService;
     }
 
     /**
@@ -30,13 +30,7 @@ public class RegisterController {
      */
     @PostMapping
     public User register(@Valid @RequestBody UserSignupRequest request) {
-        var user = userRepository.findByEmail(request.getEmail());
-        if (user != null) {
-            return user;
-        }
-
-        user = userRepository.save(request.toModel(User.class));
-
+        User user = authService.signup(request.toModel(User.class));
         return user;
     }
 }
