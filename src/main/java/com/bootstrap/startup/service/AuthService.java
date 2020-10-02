@@ -36,4 +36,14 @@ public class AuthService {
         userRepository.save(user);
         return user;
     }
+
+    public User attemptLogin(String email, String password) {
+        var user = userRepository.findByEmail(email);
+
+        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
+            return null;
+        }
+
+        return user;
+    }
 }
