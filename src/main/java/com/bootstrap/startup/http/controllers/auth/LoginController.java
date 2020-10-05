@@ -1,10 +1,8 @@
 package com.bootstrap.startup.http.controllers.auth;
 
+import com.bootstrap.startup.components.jwt.JwtUtil;
 import com.bootstrap.startup.http.requests.LoginRequest;
 import com.bootstrap.startup.http.response.JwtResponse;
-import com.bootstrap.startup.models.User;
-import com.bootstrap.startup.service.AuthService;
-import com.bootstrap.startup.services.auth.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

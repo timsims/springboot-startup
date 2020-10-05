@@ -1,9 +1,8 @@
-package com.bootstrap.startup.services.auth;
+package com.bootstrap.startup.components.auth;
 
 import com.bootstrap.startup.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 

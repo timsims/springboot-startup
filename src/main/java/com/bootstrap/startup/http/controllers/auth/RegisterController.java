@@ -2,9 +2,7 @@ package com.bootstrap.startup.http.controllers.auth;
 
 import com.bootstrap.startup.http.requests.UserSignupRequest;
 import com.bootstrap.startup.models.User;
-import com.bootstrap.startup.repository.UserRepository;
-import com.bootstrap.startup.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bootstrap.startup.services.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +14,7 @@ import javax.validation.Valid;
 @RequestMapping("/register")
 public class RegisterController {
 
-    private AuthService authService;
+    private final AuthService authService;
 
     public RegisterController(AuthService authService) {
         this.authService = authService;
