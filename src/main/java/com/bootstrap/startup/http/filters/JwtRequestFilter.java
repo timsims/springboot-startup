@@ -1,6 +1,6 @@
 package com.bootstrap.startup.http.filters;
 
-import com.bootstrap.startup.services.auth.jwt.JwtUtil;
+import com.bootstrap.startup.components.jwt.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -22,8 +22,8 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private UserDetailsService userDetailsService;
-    private JwtUtil jwtUtil;
+    private final UserDetailsService userDetailsService;
+    private final JwtUtil jwtUtil;
 
     @Autowired
     public JwtRequestFilter(UserDetailsService userDetailsService, JwtUtil jwtUtil) {

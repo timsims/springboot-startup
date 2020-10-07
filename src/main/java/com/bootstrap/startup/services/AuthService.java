@@ -1,4 +1,4 @@
-package com.bootstrap.startup.service;
+package com.bootstrap.startup.services;
 
 import com.bootstrap.startup.models.User;
 import com.bootstrap.startup.repository.UserRepository;
@@ -34,16 +34,6 @@ public class AuthService {
         // bcrypt 编码
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return user;
-    }
-
-    public User attemptLogin(String email, String password) {
-        var user = userRepository.findByEmail(email);
-
-        if (user == null || !passwordEncoder.matches(password, user.getPassword())) {
-            return null;
-        }
-
         return user;
     }
 }
