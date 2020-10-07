@@ -1,6 +1,8 @@
 package com.bootstrap.startup.http.controllers.auth;
 
 import com.bootstrap.startup.http.requests.UserSignupRequest;
+import com.bootstrap.startup.http.response.BasicResponse;
+import com.bootstrap.startup.http.response.UserResponse;
 import com.bootstrap.startup.models.User;
 import com.bootstrap.startup.services.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +29,10 @@ public class RegisterController {
      * @return
      */
     @PostMapping
-    public User register(@Valid @RequestBody UserSignupRequest request) {
+    public BasicResponse<UserResponse> register(@Valid @RequestBody UserSignupRequest request) {
         User user = authService.signup(request.toModel(User.class));
-        return user;
+
+        // User Response 用于隐藏如密码一类
+        return BasicResponse.ok(user.convertTo(UserResponse.class));
     }
 }

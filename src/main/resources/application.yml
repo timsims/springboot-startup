@@ -1,9 +1,6 @@
 # use for app aes encrypt
 app_key: base64:OUM0DBDvyBumCOybh5K7PdRTbmzXGZtp6eagbUjcX1Q=
-jwt_secret:
 spring:
-  profiles:
-    active: local
   datasource:
     url: jdbc:mysql://${mysql_url}:${mysql_port}/${db_name}?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: ${db_user}
