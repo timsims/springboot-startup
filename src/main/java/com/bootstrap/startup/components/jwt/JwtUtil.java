@@ -4,18 +4,34 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-@Component
-public class JwtUtil {
+public class JwtUtil implements JwtEncoder {
 
-    private final String secretKey = "d3Rm";
+    /**
+     * jwt mac 秘钥
+     */
+    private String secretKey;
 
+    /**
+     * jwt 过期时间 （秒）
+     */
+    private static Integer expired;
+
+    public JwtUtil(String secret, Integer expired) {
+        this.secretKey = secret;
+        JwtUtil.expired = expired;
+    }
+
+    public static Integer getExpired() {
+        return expired;
+    }
+
+    @Override
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
@@ -26,7 +42,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * expired))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
@@ -36,6 +52,7 @@ public class JwtUtil {
         return (username.contentEquals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
+    @Override
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }

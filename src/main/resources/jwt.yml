@@ -1,3 +1,0 @@
-jwt:
-  secret: ${jwt_secret}
-  expired: ${jwt_expried} # second

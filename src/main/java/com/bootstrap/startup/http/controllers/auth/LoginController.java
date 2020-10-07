@@ -1,6 +1,6 @@
 package com.bootstrap.startup.http.controllers.auth;
 
-import com.bootstrap.startup.components.jwt.JwtUtil;
+import com.bootstrap.startup.components.jwt.JwtEncoder;
 import com.bootstrap.startup.http.requests.LoginRequest;
 import com.bootstrap.startup.http.response.BasicResponse;
 import com.bootstrap.startup.http.response.JwtResponse;
@@ -17,12 +17,12 @@ import javax.validation.Valid;
 public class LoginController {
 
     private final AuthenticationManager authenticationManager;
-    private final JwtUtil jwtUtil;
+    private final JwtEncoder jwtEncoder;
 
     @Autowired
-    public LoginController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
+    public LoginController(AuthenticationManager authenticationManager, JwtEncoder jwtEncoder) {
         this.authenticationManager = authenticationManager;
-        this.jwtUtil = jwtUtil;
+        this.jwtEncoder = jwtEncoder;
     }
 
     @PostMapping
@@ -34,7 +34,7 @@ public class LoginController {
         );
 
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        final String jwt = jwtUtil.generateToken(userDetails);
+        final String jwt = jwtEncoder.generateToken(userDetails);
 
         return BasicResponse.ok(new JwtResponse(jwt));
     }
